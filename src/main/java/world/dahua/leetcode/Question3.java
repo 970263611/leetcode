@@ -1,94 +1,60 @@
 package world.dahua.leetcode;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Question3 {
 
     /**
-     * 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
-     * <p>
-     * 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
-     * <p>
+     * num: 3
+     * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长 子串 的长度。
      * <p>
      * <p>
-     * 示例 1：
      * <p>
-     * 输入：nums = [100,4,200,1,3,2]
-     * 输出：4
-     * 解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。
-     * 示例 2：
+     * 示例 1:
      * <p>
-     * 输入：nums = [0,3,7,2,5,8,4,6,0,1]
-     * 输出：9
-     * 示例 3：
+     * 输入: s = "abcabcbb"
+     * 输出: 3
+     * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。注意 "bca" 和 "cab" 也是正确答案。
+     * 示例 2:
      * <p>
-     * 输入：nums = [1,0,1,2]
-     * 输出：3
+     * 输入: s = "bbbbb"
+     * 输出: 1
+     * 解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+     * 示例 3:
+     * <p>
+     * 输入: s = "pwwkew"
+     * 输出: 3
+     * 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     * 请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
      * <p>
      * <p>
      * 提示：
      * <p>
-     * 0 <= nums.length <= 105
-     * -109 <= nums[i] <= 109
+     * 0 <= s.length <= 5 * 104
+     * s 由英文字母、数字、符号和空格组成
      */
 
     static void main() {
         Question3 question = new Question3();
         long begin = System.currentTimeMillis();
-        System.out.println(question.longestConsecutive(new int[]{1, 0, 1, 2}));
-//        System.out.println(question.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
+        System.out.println(question.lengthOfLongestSubstring("aabaab!bb"));
         System.out.println("Cost: " + (System.currentTimeMillis() - begin) + "ms");
     }
 
-    public int longestConsecutive(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
-        if (nums.length == 1) {
-            return 1;
-        }
-        Set<Integer> result = new HashSet<>();
-        Set<Integer> set = new LinkedHashSet(Arrays.stream(nums).boxed().sorted().collect(Collectors.toList()));
-        int count = 1;
-        Iterator<Integer> iterator = set.iterator();
-        int begin = iterator.next();
-        iterator.remove();
-        while (iterator.hasNext()){
-            int next = iterator.next();
-            if (next == begin + 1) {
-                begin = next;
-                count++;
-            } else {
-                begin = next;
-                result.add(count);
-                count = 1;
+    public int lengthOfLongestSubstring(String s) {
+        int max = 0;
+        List<Character> list = new LinkedList<>();
+        char[] charArray = s.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            char c = charArray[i];
+            if (list.contains(c)) {
+                max = Math.max(max, list.size());
+                int index = list.indexOf(c);
+                list = list.subList(index + 1, list.size());
             }
+            list.add(c);
         }
-        result.add(count);
-        return result.isEmpty() ? 0 : result.stream().max(Integer::compareTo).get();
-    }
-
-    /**
-     * 优秀
-     */
-    public int longestConsecutive1(int[] nums) {
-        if(nums.length == 0) return 0;
-        Arrays.sort(nums);
-        int ans = 0;
-        int tmp = 1;
-        for(int i = 1; i < nums.length; i++){
-            if(nums[i] == nums[i-1]){
-                continue;   //跳过相同的元素
-            }else if(nums[i] == nums[i-1] + 1){
-                //连续的元素
-                tmp++;
-            }else{
-                //连续中断
-                ans = Math.max(ans, tmp);
-                tmp = 1;
-            }
-        }
-        return Math.max(ans, tmp);
+        return Math.max(max, list.size());
     }
 }

@@ -2,9 +2,10 @@ package world.dahua.leetcode;
 
 import java.util.*;
 
-public class Question2 {
+public class Question49 {
 
     /**
+     * num: 49
      * 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
      * <p>
      * <p>
@@ -42,7 +43,7 @@ public class Question2 {
      */
 
     static void main() {
-        Question2 question = new Question2();
+        Question49 question = new Question49();
         long begin = System.currentTimeMillis();
         System.out.println(question.groupAnagrams(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"}));
         System.out.println("Cost: " + (System.currentTimeMillis() - begin) + "ms");

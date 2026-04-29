@@ -1,11 +1,13 @@
 package world.dahua.leetcode;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class Question6 {
+public class Question15 {
 
     /**
+     * num: 15
      * 给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请你返回所有和为 0 且不重复的三元组。
      * <p>
      * 注意：答案中不可以包含重复的三元组。
@@ -43,7 +45,7 @@ public class Question6 {
      */
 
     static void main() {
-        Question6 question = new Question6();
+        Question15 question = new Question15();
         long begin = System.currentTimeMillis();
         System.out.println(question.threeSum(new int[]{1, 2, 0, 1, 0, 0, 0, 0}));
         System.out.println("Cost: " + (System.currentTimeMillis() - begin) + "ms");

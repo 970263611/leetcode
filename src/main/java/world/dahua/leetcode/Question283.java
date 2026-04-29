@@ -1,10 +1,9 @@
 package world.dahua.leetcode;
 
-import java.util.Arrays;
-
-public class Question4 {
+public class Question283 {
 
     /**
+     * num: 283
      * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
      * <p>
      * 请注意 ，必须在不复制数组的情况下原地对数组进行操作。
@@ -28,7 +27,7 @@ public class Question4 {
      */
 
     static void main() {
-        Question4 question = new Question4();
+        Question283 question = new Question283();
         long begin = System.currentTimeMillis();
         question.moveZeroes(new int[]{2, 1});
         System.out.println("Cost: " + (System.currentTimeMillis() - begin) + "ms");
