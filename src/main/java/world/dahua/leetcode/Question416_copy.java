@@ -2,7 +2,7 @@ package world.dahua.leetcode;
 
 import java.util.Arrays;
 
-public class Question416 {
+public class Question416_copy {
 
     /**
      * num: 416
@@ -29,48 +29,39 @@ public class Question416 {
      * 1 <= nums[i] <= 100
      */
     static void main() {
-        Question416 question = new Question416();
+        Question416_copy question = new Question416_copy();
         long begin = System.currentTimeMillis();
         System.out.println(question.canPartition(new int[]{3, 3, 6, 8, 16, 16, 16, 18, 20}));
         System.out.println("Cost: " + (System.currentTimeMillis() - begin) + "ms");
     }
 
+    /**
+     * 抄的 01背包问题
+     *
+     * @param nums
+     * @return
+     */
     public boolean canPartition(int[] nums) {
-        if (nums.length == 1) {
+        int totalSum = Arrays.stream(nums).sum();
+        // 如果总和是奇数，直接返回false
+        if (totalSum % 2 != 0) {
             return false;
         }
-        Arrays.sort(nums);
-        int i = 0;
-        int j = nums.length - 1;
-        int sum = nums[j] - nums[i];
-        while (j > i + 1) {
-            if (sum >= 0) {
-                i++;
-                sum -= nums[i];
-            } else {
-                j--;
-                sum += nums[j];
-            }
-        }
-        if (sum == 0) {
-            return true;
-        } else if (sum > 0) {
-            return false;
-        } else {
-            int t = Math.abs(sum) / 2;
-            for (int num : nums) {
-                if (t == num) {
+        int target = totalSum / 2;
+        // dp[j]表示能否凑出和为j的子集
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;  // 空集的和为0
+        for (int num : nums) {
+            // 从target倒序遍历到当前数字num
+            for (int j = target; j >= num; j--) {
+                // 状态转移：当前数字可选可不选
+                dp[j] = dp[j] || dp[j - num];
+                // 剪枝优化：如果已经找到解，直接返回
+                if (dp[target]) {
                     return true;
-                }
-                t -= num;
-                if (t == 0) {
-                    return true;
-                }
-                if (t < 0) {
-                    return false;
                 }
             }
         }
-        return false;
+        return dp[target];
     }
 }
